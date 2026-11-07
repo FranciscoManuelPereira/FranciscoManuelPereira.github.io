@@ -19,5 +19,3 @@ default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; base
 - Headers like `Strict-Transport-Security` or `X-Content-Type-Options` cannot be set at all.
 
 Putting a CDN such as Cloudflare in front of the site would allow adding those headers later.
-
-*TODO: replace this sample with your first real writeup.*
