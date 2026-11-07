@@ -45,9 +45,12 @@ export const services = [
 // Highlighted on the home page. School projects live on the CV page instead.
 export const projects: { title: string; description: string; tags: string[]; url?: string; repo?: string }[] = [
   {
-    title: 'Coming soon: security showcase project',
-    description: 'A new web security project is in progress and will be featured here.',
-    tags: ['Web Security'],
+    title: 'Security Headers Checker',
+    description:
+      'Command-line tool that grades a website’s HTTP security headers and cookies from A to F and explains how to fix each issue: CSP, HSTS, clickjacking, cookie flags and more. Zero dependencies, unit tested, usable in CI.',
+    tags: ['Node.js', 'HTTP security', 'OWASP', 'CLI'],
+    url: '/writeups/http-security-headers/',
+    repo: 'https://github.com/FranciscoManuelPereira/security-headers-checker',
   },
 ];
 
