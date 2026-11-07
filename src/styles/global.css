@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0b0f14;
+  --color-surface: #121821;
+  --color-border: #1f2a37;
+  --color-text: #d7dee8;
+  --color-muted: #8b98a9;
+  --color-accent: #3ddc97;
+  --color-accent-2: #5eb1ff;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html { scroll-behavior: smooth; background: var(--color-bg); color: var(--color-text); }
+body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+::selection { background: var(--color-accent); color: var(--color-bg); }
+
+.prose-writeup h2 { font-size: 1.5rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+.prose-writeup h3 { font-size: 1.2rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+.prose-writeup p, .prose-writeup ul, .prose-writeup ol { margin: 0 0 1rem; line-height: 1.75; }
+.prose-writeup ul { list-style: disc; padding-left: 1.5rem; }
+.prose-writeup ol { list-style: decimal; padding-left: 1.5rem; }
+.prose-writeup a { color: var(--color-accent); text-decoration: underline; }
+.prose-writeup code { font-family: var(--font-mono); font-size: 0.9em; }
+.prose-writeup :not(pre) > code { background: var(--color-surface); padding: 0.1rem 0.35rem; border-radius: 0.25rem; }
+.prose-writeup pre { padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 0 0 1rem; border: 1px solid var(--color-border); background: var(--color-surface); }

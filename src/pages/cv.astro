@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import { profile, experience, education, schoolProjects } from '../data/profile';
+
+const timelines = [
+  { id: 'experience', title: 'Experience', items: experience },
+  { id: 'education', title: 'Education', items: education },
+];
+---
+
+<Base title="CV" description={`Curriculum vitae of ${profile.name}`}>
+  <Section id="cv" title="Curriculum Vitae">
+    <p class="text-lg">{profile.name}</p>
+    <p class="text-muted">{profile.role} · {profile.location}</p>
+    <p class="mt-2 text-sm text-muted">
+      <a href={`mailto:${profile.email}`} class="text-accent hover:underline">{profile.email}</a>{' · '}
+      <a href={profile.links.linkedin} class="text-accent hover:underline" rel="noopener noreferrer">LinkedIn</a>{' · '}
+      <a href={profile.links.github} class="text-accent hover:underline" rel="noopener noreferrer">GitHub</a>
+    </p>
+
+    {timelines.map((t) => (
+      <div class="mt-10">
+        <h3 class="font-mono text-accent">{t.title}</h3>
+        <ol class="mt-4 space-y-6 border-l border-border pl-6">
+          {t.items.map((e) => (
+            <li>
+              <p class="font-mono text-xs text-muted">{e.period}</p>
+              <p class="mt-1 font-semibold">{e.title} <span class="font-normal text-muted">· {e.place}</span></p>
+              <p class="mt-1 text-sm text-muted leading-relaxed">{e.description}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    ))}
+
+    <div class="mt-10">
+      <h3 class="font-mono text-accent">Bootcamp projects</h3>
+      <ul class="mt-4 grid gap-4 md:grid-cols-3">
+        {schoolProjects.map((p) => (
+          <li class="rounded-lg border border-border bg-surface p-4">
+            <p class="font-semibold">{p.title}</p>
+            <p class="mt-1 text-sm text-muted">{p.description}</p>
+            <p class="mt-2 font-mono text-xs text-accent-2">{p.tags.join(' · ')}</p>
+            {p.repo && <a href={p.repo} class="mt-2 inline-block text-sm text-accent hover:underline" rel="noopener noreferrer">Code →</a>}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="mt-10 grid gap-8 sm:grid-cols-2">
+      <div>
+        <h3 class="font-mono text-accent">Skills</h3>
+        <ul class="mt-3 space-y-1 text-sm text-muted">
+          {Object.entries(profile.skills).map(([group, items]) => (
+            <li><span class="text-text">{group}:</span> {items.join(', ')}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-mono text-accent">Languages</h3>
+        <ul class="mt-3 space-y-1 text-sm text-muted">
+          {profile.languages.map((l) => <li>{l}</li>)}
+        </ul>
+      </div>
+    </div>
+  </Section>
+</Base>

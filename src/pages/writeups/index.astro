@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import { getCollection } from 'astro:content';
+
+const writeups = (await getCollection('writeups', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Base title="Writeups" description="Web security writeups, labs and notes.">
+  <Section id="writeups" title="Writeups">
+    <ul class="space-y-3">
+      {writeups.map((w) => (
+        <li>
+          <a href={`/writeups/${w.id}/`} class="group block rounded-lg border border-border p-4 hover:border-accent">
+            <p class="font-mono text-xs text-muted">{w.data.date.toISOString().slice(0, 10)} · {w.data.tags.join(', ')}</p>
+            <p class="mt-1 font-semibold group-hover:text-accent">{w.data.title}</p>
+            <p class="mt-1 text-sm text-muted">{w.data.description}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Section>
+</Base>

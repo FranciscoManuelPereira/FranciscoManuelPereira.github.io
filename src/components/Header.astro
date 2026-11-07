@@ -1,0 +1,23 @@
+---
+const nav = [
+  { href: '/#about', label: 'About' },
+  { href: '/#services', label: 'Services' },
+  { href: '/#projects', label: 'Projects' },
+  { href: '/writeups/', label: 'Writeups' },
+  { href: '/cv/', label: 'CV' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+
+<header class="sticky top-0 z-10 border-b border-border bg-bg/90 backdrop-blur">
+  <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-3 sm:px-6">
+    <a href="/" class="font-mono text-sm font-bold text-accent">~/francisco<span class="text-muted">$</span></a>
+    <nav aria-label="Main">
+      <ul class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
+        {nav.map((item) => (
+          <li><a href={item.href} class="hover:text-accent">{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
