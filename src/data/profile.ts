@@ -15,9 +15,8 @@ export const profile = {
     'Before tech I spent six years in retail operations at BCM Bricolage, managing a store area, handling customer complaints and running training sessions. That taught me to listen to clients, explain problems in plain language and follow through until they are solved.',
     'I am pragmatic, always learning, and I enjoy working closely with the people I build for.',
   ],
-  // TODO(Francisco): confirm which security tools and topics you actually know, and add certifications or courses.
   skills: {
-    Security: ['OWASP Top 10', 'HTTP security headers', 'Content Security Policy', 'Secure authentication'],
+    Security: ['Networking fundamentals', 'How the web works (HTTP, DNS)', 'Linux & Windows fundamentals', 'HTTP security headers', 'OWASP Top 10 (learning)'],
     Development: ['JavaScript (ES6+)', 'React', 'Node.js', 'Express.js', 'MongoDB', 'HTML5 & CSS3'],
     Tools: ['Git', 'Linux', 'Netlify', 'Cloudinary'],
   },
@@ -62,6 +61,12 @@ export const experience: { period: string; title: string; place: string; descrip
 ];
 
 export const education: { period: string; title: string; place: string; description: string }[] = [
+  {
+    period: 'Oct 2026',
+    title: 'Pre Security Learning Path',
+    place: 'TryHackMe',
+    description: 'Cyber security foundations: networking, how the web works, Linux and Windows fundamentals (19 hours, certificate of completion).',
+  },
   {
     period: '2023',
     title: 'Full-Stack Web Developer Bootcamp',
