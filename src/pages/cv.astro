@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import { profile, experience } from '../data/profile';
+---
+
+<Base title="CV" description={`Curriculum vitae of ${profile.name}`}>
+  <Section id="cv" title="Curriculum Vitae">
+    <p class="text-muted">{profile.role} · {profile.location}</p>
+    <ol class="mt-8 space-y-6 border-l border-border pl-6">
+      {experience.map((e) => (
+        <li>
+          <p class="font-mono text-xs text-accent">{e.period}</p>
+          <h3 class="mt-1 font-semibold">{e.title} <span class="text-muted">· {e.place}</span></h3>
+          <p class="mt-1 text-sm text-muted">{e.description}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+</Base>

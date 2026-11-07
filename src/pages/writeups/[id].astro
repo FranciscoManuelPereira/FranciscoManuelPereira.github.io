@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const writeups = await getCollection('writeups', ({ data }) => !data.draft);
+  return writeups.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Base title={entry.data.title} description={entry.data.description}>
+  <article class="py-14">
+    <p class="font-mono text-xs text-muted">{entry.data.date.toISOString().slice(0, 10)} · {entry.data.tags.join(', ')}</p>
+    <h1 class="mt-2 text-3xl font-bold">{entry.data.title}</h1>
+    <div class="prose-writeup mt-8 max-w-3xl">
+      <Content />
+    </div>
+    <a href="/writeups/" class="mt-10 inline-block text-sm text-accent hover:underline">← All writeups</a>
+  </article>
+</Base>
