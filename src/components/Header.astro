@@ -1,11 +1,10 @@
 ---
 const nav = [
-  { href: '/#about', label: 'About' },
   { href: '/#services', label: 'Services' },
   { href: '/#projects', label: 'Projects' },
+  { href: '/#about', label: 'About' },
   { href: '/writeups/', label: 'Writeups' },
   { href: '/cv/', label: 'CV' },
-  { href: '/#contact', label: 'Contact' },
 ];
 ---
 
@@ -13,10 +12,11 @@ const nav = [
   <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-3 sm:px-6">
     <a href="/" class="font-mono text-sm font-bold text-accent">~/francisco<span class="text-muted">$</span></a>
     <nav aria-label="Main">
-      <ul class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
+      <ul class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
         {nav.map((item) => (
           <li><a href={item.href} class="hover:text-accent">{item.label}</a></li>
         ))}
+        <li><a href="/#contact" class="rounded-md bg-accent px-3 py-1 font-semibold text-bg hover:opacity-90">Hire me</a></li>
       </ul>
     </nav>
   </div>

@@ -1,8 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
+import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
-import { profile, services, projects } from '../data/profile';
+import { profile, services, projects, process } from '../data/profile';
 
 const writeups = (await getCollection('writeups', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -10,28 +11,104 @@ const writeups = (await getCollection('writeups', ({ data }) => !data.draft))
 ---
 
 <Base>
-  <section class="py-20 sm:py-28">
-    <p class="font-mono text-sm text-accent">$ whoami</p>
-    <h1 class="mt-3 text-4xl font-bold sm:text-5xl">{profile.name}</h1>
-    <p class="mt-2 text-xl text-accent-2">{profile.role}</p>
-    <p class="mt-6 max-w-2xl text-lg text-muted">{profile.tagline}</p>
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a href="#contact" class="rounded bg-accent px-5 py-2.5 font-semibold text-bg hover:opacity-90">Work with me</a>
-      <a href="/cv/" class="rounded border border-border px-5 py-2.5 font-semibold hover:border-accent">View CV</a>
+  <section class="hero relative py-20 sm:py-28">
+    <div class="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
+      <div>
+        <p class="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 font-mono text-xs text-accent">
+          <span class="h-2 w-2 rounded-full bg-accent animate-pulse"></span> Available for freelance work
+        </p>
+        <h1 class="mt-6 text-4xl font-bold leading-tight sm:text-6xl">
+          Is your website <span class="text-gradient">leaving the door open?</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg text-muted">{profile.tagline}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#contact" class="rounded-lg bg-accent px-6 py-3 font-semibold text-bg shadow-glow transition hover:-translate-y-0.5 hover:opacity-90">Get a security check</a>
+          <a href="#services" class="rounded-lg border border-border px-6 py-3 font-semibold transition hover:border-accent hover:text-accent">See services</a>
+        </div>
+        <p class="mt-6 font-mono text-sm text-muted">{profile.name} · {profile.role}</p>
+      </div>
+
+      <div class="terminal overflow-hidden rounded-xl border border-border bg-surface shadow-2xl" aria-label="Example output of my Security Headers Checker">
+        <div class="flex items-center gap-1.5 border-b border-border px-4 py-3">
+          <span class="h-3 w-3 rounded-full bg-red-400/80"></span>
+          <span class="h-3 w-3 rounded-full bg-yellow-400/80"></span>
+          <span class="h-3 w-3 rounded-full bg-green-400/80"></span>
+          <span class="ml-3 font-mono text-xs text-muted">shc example.com</span>
+        </div>
+        <pre class="overflow-x-auto p-5 font-mono text-xs leading-relaxed sm:text-sm"><span class="text-accent">$</span> shc example.com
+
+  <span class="text-text">Grade</span> <span class="rounded bg-yellow-400/20 px-1.5 text-yellow-300">C</span> <span class="text-muted">· score 63/100</span>
+
+  <span class="text-accent">✔</span> Content-Security-Policy   <span class="text-muted">25/25</span>
+  <span class="text-red-400">✘</span> Clickjacking protection    <span class="text-muted"> 0/10</span>
+    <span class="text-accent-2">fix:</span> <span class="text-muted">frame-ancestors 'none'</span>
+  <span class="text-red-400">✘</span> Cookies                    <span class="text-muted"> 0/10</span>
+    <span class="text-accent-2">fix:</span> <span class="text-muted">add Secure; HttpOnly</span>
+  <span class="text-muted">...</span></pre>
+      </div>
     </div>
   </section>
 
-  <Section id="about" title="About">
-    <div class="grid gap-8 md:grid-cols-[2fr_1fr]">
+  <Section id="services" title="How I can help">
+    <ul class="grid gap-5 md:grid-cols-3">
+      {services.map((s) => (
+        <li class="card group flex flex-col rounded-xl border border-border bg-surface p-6 transition hover:-translate-y-1 hover:border-accent/60">
+          <span class="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-accent/10 text-accent">
+            <Icon name={s.icon} />
+          </span>
+          <h3 class="mt-4 text-lg font-semibold">{s.title}</h3>
+          <p class="mt-2 text-sm text-muted leading-relaxed">{s.description}</p>
+          <ul class="mt-4 space-y-1.5 border-t border-border pt-4 text-sm">
+            {s.deliverables.map((d) => (
+              <li class="flex items-start gap-2"><Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-accent" /> {d}</li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section id="process" title="How it works">
+    <ol class="grid gap-5 md:grid-cols-3">
+      {process.map((p) => (
+        <li class="relative rounded-xl border border-border p-6">
+          <p class="font-mono text-3xl font-bold text-gradient">{p.step}</p>
+          <h3 class="mt-3 font-semibold">{p.title}</h3>
+          <p class="mt-2 text-sm text-muted leading-relaxed">{p.description}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section id="projects" title="Featured project">
+    <ul class="grid gap-5">
+      {projects.map((p) => (
+        <li class="rounded-xl border border-border bg-gradient-to-br from-surface to-bg p-6 sm:p-8">
+          <h3 class="text-xl font-semibold">{p.url ? <a href={p.url} class="hover:text-accent">{p.title}</a> : p.title}</h3>
+          <p class="mt-3 max-w-3xl text-muted leading-relaxed">{p.description}</p>
+          <p class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
+            {p.tags.map((t) => <span class="rounded-full border border-accent-2/30 bg-accent-2/10 px-2.5 py-0.5 text-accent-2">{t}</span>)}
+          </p>
+          <div class="mt-5 flex flex-wrap gap-4 text-sm font-semibold">
+            {p.url && <a href={p.url} class="text-accent hover:underline">Read the writeup →</a>}
+            {p.repo && <a href={p.repo} class="text-accent hover:underline" rel="noopener noreferrer">Source code →</a>}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section id="about" title="About me">
+    <div class="grid gap-10 md:grid-cols-[3fr_2fr]">
       <div class="space-y-4 text-muted leading-relaxed">
         {profile.about.map((p) => <p>{p}</p>)}
       </div>
-      <dl class="space-y-4 text-sm">
+      <dl class="space-y-5 text-sm">
         {Object.entries(profile.skills).map(([group, items]) => (
           <div>
             <dt class="font-mono text-accent">{group}</dt>
-            <dd class="mt-1 flex flex-wrap gap-1.5">
-              {items.map((s) => <span class="rounded border border-border px-2 py-0.5">{s}</span>)}
+            <dd class="mt-2 flex flex-wrap gap-1.5">
+              {items.map((s) => <span class="rounded-md border border-border bg-surface px-2 py-0.5">{s}</span>)}
             </dd>
           </div>
         ))}
@@ -39,35 +116,11 @@ const writeups = (await getCollection('writeups', ({ data }) => !data.draft))
     </div>
   </Section>
 
-  <Section id="services" title="Services">
-    <ul class="grid gap-4 md:grid-cols-3">
-      {services.map((s) => (
-        <li class="rounded-lg border border-border bg-surface p-5">
-          <h3 class="font-semibold">{s.title}</h3>
-          <p class="mt-2 text-sm text-muted leading-relaxed">{s.description}</p>
-        </li>
-      ))}
-    </ul>
-  </Section>
-
-  <Section id="projects" title="Projects">
-    <ul class="grid gap-4 md:grid-cols-2">
-      {projects.map((p) => (
-        <li class="rounded-lg border border-border bg-surface p-5">
-          <h3 class="font-semibold">{p.url ? <a href={p.url} class="hover:text-accent">{p.title}</a> : p.title}</h3>
-          <p class="mt-2 text-sm text-muted leading-relaxed">{p.description}</p>
-          <p class="mt-3 flex flex-wrap gap-1.5 font-mono text-xs text-accent-2">{p.tags.map((t) => <span>#{t}</span>)}</p>
-          {p.repo && <a href={p.repo} class="mt-3 inline-block text-sm text-accent hover:underline" rel="noopener noreferrer">Source code →</a>}
-        </li>
-      ))}
-    </ul>
-  </Section>
-
   <Section id="writeups" title="Latest writeups">
-    <ul class="space-y-3">
+    <ul class="grid gap-4 md:grid-cols-2">
       {writeups.map((w) => (
         <li>
-          <a href={`/writeups/${w.id}/`} class="group block rounded-lg border border-border p-4 hover:border-accent">
+          <a href={`/writeups/${w.id}/`} class="group block h-full rounded-xl border border-border p-5 transition hover:border-accent">
             <p class="font-mono text-xs text-muted">{w.data.date.toISOString().slice(0, 10)}</p>
             <p class="mt-1 font-semibold group-hover:text-accent">{w.data.title}</p>
             <p class="mt-1 text-sm text-muted">{w.data.description}</p>
@@ -78,11 +131,15 @@ const writeups = (await getCollection('writeups', ({ data }) => !data.draft))
     <a href="/writeups/" class="mt-4 inline-block text-sm text-accent hover:underline">All writeups →</a>
   </Section>
 
-  <Section id="contact" title="Contact">
-    <p class="max-w-2xl text-muted">Need a security review of your web application, or a website built securely from the start? Get in touch.</p>
-    <div class="mt-6 flex flex-wrap gap-3">
-      <a href={`mailto:${profile.email}`} class="rounded bg-accent px-5 py-2.5 font-semibold text-bg hover:opacity-90">{profile.email}</a>
-      <a href={profile.links.linkedin} class="rounded border border-border px-5 py-2.5 font-semibold hover:border-accent" rel="noopener noreferrer">LinkedIn</a>
+  <section id="contact" class="scroll-mt-20 py-14">
+    <div class="cta rounded-2xl border border-accent/30 p-8 text-center sm:p-12">
+      <h2 class="text-3xl font-bold sm:text-4xl">Let's make your website <span class="text-gradient">harder to break.</span></h2>
+      <p class="mx-auto mt-4 max-w-2xl text-muted">Need a security review of your website, or a site built securely from the start? Send me a message and tell me what you need.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href={`mailto:${profile.email}?subject=Website%20security%20check`} class="rounded-lg bg-accent px-6 py-3 font-semibold text-bg shadow-glow transition hover:-translate-y-0.5 hover:opacity-90">Email me</a>
+        <a href={profile.links.linkedin} class="rounded-lg border border-border px-6 py-3 font-semibold transition hover:border-accent hover:text-accent" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <p class="mt-4 font-mono text-xs text-muted">{profile.email}</p>
     </div>
-  </Section>
+  </section>
 </Base>

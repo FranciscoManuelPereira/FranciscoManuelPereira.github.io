@@ -1,11 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
-import { profile, experience, education, schoolProjects } from '../data/profile';
+import { profile, projects, education, schoolProjects } from '../data/profile';
 
 const timelines = [
-  { id: 'experience', title: 'Experience', items: experience },
-  { id: 'education', title: 'Education', items: education },
+  {
+    id: 'projects',
+    title: 'Security projects',
+    items: projects.map((p) => ({ period: '2026', title: p.title, place: p.tags.join(' · '), description: p.description })),
+  },
+  { id: 'education', title: 'Education & certifications', items: education },
 ];
 ---
 
