@@ -28,17 +28,23 @@ const pageTitle = title ? `${title} · ${profile.name}` : `${profile.name} · ${
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 // GitHub Pages cannot send custom HTTP headers, so the policy is delivered with a meta tag.
-// The site ships no inline scripts or styles, which keeps the policy strict.
+// The site ships no JavaScript at all (the JSON-LD block is data, not a script), so scripts are
+// switched off entirely: an injected <script> cannot run. If you add client-side JS later, change
+// script-src to 'self' and keep it in external files.
 const csp = [
-  "default-src 'self'",
-  "script-src 'self'",
+  "default-src 'none'",
+  "script-src 'none'",
   "style-src 'self'",
   "img-src 'self' data:",
   "font-src 'self'",
   "connect-src 'self'",
+  "manifest-src 'self'",
+  "frame-src 'none'",
+  "worker-src 'none'",
   "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'self' mailto:",
+  "base-uri 'none'",
+  "form-action 'none'",
+  "require-trusted-types-for 'script'",
   'upgrade-insecure-requests',
 ].join('; ');
 ---
